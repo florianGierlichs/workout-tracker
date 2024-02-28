@@ -22,7 +22,7 @@ model User {
 }
 
 model ExerciseSession {
-  id     Int      @id @default(autoincrement())
+  id     String   @id @default(cuid())
   date   DateTime
   sets   Int
   reps   Int
@@ -30,13 +30,13 @@ model ExerciseSession {
 
   userId     String
   user       User     @relation(fields: [userId], references: [id])
-  ExerciseId Int
+  ExerciseId String
   exercise   Exercise @relation(fields: [ExerciseId], references: [id])
 }
 
 model Exercise {
-  id        Int    @id @default(autoincrement())
-  name      String
+  id        String @id @default(cuid())
+  name      String @unique
   muscle    String
   equipment String
 
