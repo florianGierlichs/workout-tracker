@@ -5,10 +5,10 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  console.log(session);
+
   return (
     <>
-      {true ? (
+      {session ? (
         <Dashboard />
       ) : (
         <p>You are not logged in and do not have access to the application.</p>
