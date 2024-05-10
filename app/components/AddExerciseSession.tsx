@@ -31,7 +31,10 @@ export const AddExerciseSession = ({
             </label>
             <div className="mt-2">
               <div className="rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <Select options={exercises} />
+                <Select
+                  options={exercises}
+                  form={{ id: "exerciseId", name: "exerciseId" }}
+                />
               </div>
             </div>
           </div>

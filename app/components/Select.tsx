@@ -8,12 +8,18 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-interface Option {
-  id: string;
-  name: string;
+interface SelectProps {
+  form: {
+    id: string;
+    name: string;
+  };
+  options?: {
+    id: string;
+    name: string;
+  }[];
 }
 
-export function Select({ options }: { options?: Option[] }) {
+export function Select({ options, form }: SelectProps) {
   const [selected, setSelected] = useState(options?.[0]);
 
   return (
@@ -29,8 +35,8 @@ export function Select({ options }: { options?: Option[] }) {
                   className="hidden"
                   value={selected?.id}
                   readOnly
-                  id="exerciseId"
-                  name="exerciseId"
+                  id={form.id}
+                  name={form.name}
                 />
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
