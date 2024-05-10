@@ -2,15 +2,19 @@
 
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { Exercise } from "@prisma/client";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function SelectExercises({ exercises }: { exercises?: Exercise[] }) {
-  const [selected, setSelected] = useState(exercises?.[0]);
+interface Option {
+  id: string;
+  name: string;
+}
+
+export function Select({ options }: { options?: Option[] }) {
+  const [selected, setSelected] = useState(options?.[0]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -45,16 +49,16 @@ export function SelectExercises({ exercises }: { exercises?: Exercise[] }) {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {exercises?.map((exercise) => (
+                {options?.map((option) => (
                   <Listbox.Option
-                    key={exercise.id}
+                    key={option.id}
                     className={({ active }) =>
                       classNames(
                         active ? "bg-indigo-600 text-white" : "text-gray-900",
                         "relative cursor-default select-none py-2 pl-3 pr-9"
                       )
                     }
-                    value={exercise}
+                    value={option}
                   >
                     {({ selected, active }) => (
                       <>
@@ -65,7 +69,7 @@ export function SelectExercises({ exercises }: { exercises?: Exercise[] }) {
                               "ml-3 block"
                             )}
                           >
-                            {exercise.name}
+                            {option.name}
                           </span>
                         </div>
 

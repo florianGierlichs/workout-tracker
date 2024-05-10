@@ -1,10 +1,13 @@
 import { addExerciseSession } from "../actions/addExerciseSession";
-import { SelectExercises } from "./SelectExercises";
+import { Select } from "./Select";
 import { Exercise } from "@prisma/client";
-// 5 - 7;
-// 8 - 11;
-// 12 - 15;
-// 16 - 20;
+
+const reps = [
+  { id: "5-7", name: "5-7" },
+  { id: "8-11", name: "8-11" },
+  { id: "12-15", name: "12-15" },
+  { id: "16-20", name: "16-20" },
+];
 
 export const AddExerciseSession = ({
   exercises,
@@ -28,7 +31,7 @@ export const AddExerciseSession = ({
             </label>
             <div className="mt-2">
               <div className="rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <SelectExercises exercises={exercises} />
+                <Select options={exercises} />
               </div>
             </div>
           </div>
