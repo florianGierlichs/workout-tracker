@@ -1,9 +1,8 @@
 import { getExercises } from "../actions/getExercises";
-import { AddExercise } from "../components/AddExercise";
-import { ExercisesView } from "../components/ExercisesView";
+import { AddExerciseSession } from "../components/AddExerciseSession";
 import { TabNavigation } from "../components/TabNavigation";
 
-export default async function Exercises() {
+export default async function ExerciseSessions() {
   const exercises = await getExercises();
 
   return (
@@ -12,10 +11,9 @@ export default async function Exercises() {
         <TabNavigation
           items={[
             {
-              title: "Show Exercises",
-              content: <ExercisesView exercises={exercises} />,
+              title: "Add ExerciseSessions",
+              content: <AddExerciseSession exercises={exercises} />,
             },
-            { title: "Add Exercises", content: <AddExercise /> },
           ]}
         />
       </div>
