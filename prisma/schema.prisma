@@ -25,7 +25,7 @@ model ExerciseSession {
   id     String   @id @default(cuid())
   date   DateTime
   sets   Int
-  reps   Int
+  reps   String
   weight Int
 
   userId     String
