@@ -20,6 +20,15 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession(authOptions);
 
+  // session:  {
+  //   user: {
+  //     name: null,
+  //     email: 'gierlichs@gmx.de',
+  //     image: undefined,
+  //     id: 'clt5sr7750000eitf414tqrcs'
+  //   }
+  // }
+
   return (
     <html lang="en" className="h-full bg-gray-100">
       <body className={inter.className + "h-full"}>

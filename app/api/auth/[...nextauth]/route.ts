@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session, User } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import { myPrisma } from "@/prisma/prismaClient";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -19,6 +19,14 @@ export const authOptions = {
       from: process.env.EMAIL_FROM,
     }),
   ],
+  callbacks: {
+    session: async ({ session, user }: { session: Session; user: User }) => {
+      if (session?.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
 };
 
 export const handler = NextAuth(authOptions);
