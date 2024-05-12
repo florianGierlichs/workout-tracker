@@ -4,12 +4,15 @@ import { myPrisma } from "@/prisma/prismaClient";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 
-export const addExerciseSession = async (formData: FormData) => {
+export const addExerciseSession = async (
+  _previousState: unknown,
+  formData: FormData
+) => {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
     console.warn("User is not logged in");
-    return;
+    return { message: "User is not logged in" };
   }
 
   const sets = formData.get("sets");
@@ -38,9 +41,10 @@ export const addExerciseSession = async (formData: FormData) => {
       return newExerciseSession;
     } catch (error) {
       console.error("Error creating exercise session: ", error);
-      throw error;
+      return { message: "Error creating exercise session" };
     }
   } else {
     console.warn("Form data is not valid");
+    return { message: "Form data is not valid" };
   }
 };

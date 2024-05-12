@@ -2,10 +2,7 @@
 
 import { Tab } from "@headlessui/react";
 import { ReactNode } from "react";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import { classNames } from "../utils/classNames";
 
 interface TabNavigationItem {
   title: string;

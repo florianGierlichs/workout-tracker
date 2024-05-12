@@ -1,6 +1,11 @@
+"use client";
+
+import { use, useEffect, useRef, useState } from "react";
 import { addExerciseSession } from "../actions/addExerciseSession";
+import { AlertMessage } from "./AlertMessage";
 import { Select } from "./Select";
 import { Exercise } from "@prisma/client";
+import { useFormState } from "react-dom";
 
 const reps = [
   { id: "5-7", name: "5-7" },
@@ -9,15 +14,50 @@ const reps = [
   { id: "16-20", name: "16-20" },
 ];
 
+function isErrorState(
+  state:
+    | {
+        id: string;
+        date: Date;
+        sets: number;
+        reps: string;
+        weight: number;
+        userId: string;
+        ExerciseId: string;
+      }
+    | {
+        message: string;
+      }
+): state is { message: string } {
+  return state.hasOwnProperty("message");
+}
+
 export const AddExerciseSession = ({
   exercises,
 }: {
   exercises?: Exercise[];
 }) => {
+  const [state, formAction] = useFormState(addExerciseSession, null);
+  const [showAlert, setShowAlert] = useState(false);
+  const ref = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state) {
+      if (!isErrorState(state)) {
+        ref.current?.reset();
+      }
+      setShowAlert(true);
+      const timeout = setTimeout(() => {
+        setShowAlert(false);
+        clearTimeout(timeout);
+      }, 3000);
+    }
+  }, [state]);
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-32 lg:px-8">
       <h2>Add ExerciseSession</h2>
-      <form action={addExerciseSession}>
+      <form ref={ref} action={formAction}>
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           {/*  */}
           {/* Exercise */}
@@ -110,6 +150,14 @@ export const AddExerciseSession = ({
           </button>
         </div>
       </form>
+      {showAlert && state && (
+        <AlertMessage
+          type={isErrorState(state) ? "error" : "success"}
+          message={
+            isErrorState(state) ? state.message : "New exercise session create"
+          }
+        />
+      )}
     </div>
   );
 };
