@@ -1,10 +1,47 @@
+"use client";
+
+import { useFormState } from "react-dom";
 import { addExercise } from "../actions/addExercise";
+import { useEffect, useRef, useState } from "react";
+import { AlertMessage } from "./AlertMessage";
+
+function isErrorState(
+  state:
+    | {
+        id: string;
+        name: string;
+        muscle: string;
+        equipment: string;
+      }
+    | {
+        message: string;
+      }
+): state is { message: string } {
+  return state.hasOwnProperty("message");
+}
 
 export const AddExercise = () => {
+  const [state, formAction] = useFormState(addExercise, null);
+  const [showAlert, setShowAlert] = useState(false);
+  const ref = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state) {
+      if (!isErrorState(state)) {
+        ref.current?.reset();
+      }
+      setShowAlert(true);
+      const timeout = setTimeout(() => {
+        setShowAlert(false);
+        clearTimeout(timeout);
+      }, 3000);
+    }
+  }, [state]);
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-32 lg:px-8">
       <h2>Add Exercise</h2>
-      <form action={addExercise}>
+      <form action={formAction}>
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="sm:col-span-4">
             <label
@@ -74,6 +111,14 @@ export const AddExercise = () => {
           </button>
         </div>
       </form>
+      {showAlert && state && (
+        <AlertMessage
+          type={isErrorState(state) ? "error" : "success"}
+          message={
+            isErrorState(state) ? state.message : "New exercise session create"
+          }
+        />
+      )}
     </div>
   );
 };

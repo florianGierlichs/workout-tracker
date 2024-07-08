@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addExerciseSession } from "../actions/addExerciseSession";
 import { AlertMessage } from "./AlertMessage";
 import { Select } from "./Select";
