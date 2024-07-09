@@ -34,7 +34,7 @@ export const addExerciseSession = async (
           reps: reps,
           weight: Number(weight),
           userId: session.user.id,
-          ExerciseId: exerciseId,
+          exerciseId: exerciseId,
         },
       });
       console.log("New exercise session created: ", newExerciseSession);

@@ -23,7 +23,7 @@ function isErrorState(
         reps: string;
         weight: number;
         userId: string;
-        ExerciseId: string;
+        exerciseId: string;
       }
     | {
         message: string;
