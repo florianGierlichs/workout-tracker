@@ -31,6 +31,7 @@ model ExerciseSession {
   userId     String
   user       User     @relation(fields: [userId], references: [id])
   ExerciseId String
+  exerciseId String?
   exercise   Exercise @relation(fields: [ExerciseId], references: [id])
 }
 
