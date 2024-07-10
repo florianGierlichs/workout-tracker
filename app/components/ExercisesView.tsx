@@ -1,9 +1,9 @@
 import { Exercise } from "@prisma/client";
 
-export const ExercisesView = ({ exercises }: { exercises?: Exercise[] }) => {
+export const ExercisesView = ({ exercises }: { exercises: Exercise[] }) => {
   return (
     <div>
-      {exercises?.map((exercise) => (
+      {exercises.map((exercise) => (
         <div key={exercise.id} className="p-4 max-w-sm">
           <div className="flex rounded-lg h-full  bg-gray-600 p-4 flex-col">
             <div className="flex items-center mb-3">
